@@ -21,7 +21,7 @@ $Lang = {
         [string]$l7 = "Press Enter to begin"
         [string]$l8 = "Type in logging frequency in seconds"
         [string]$l9 = "Logging frequency was set to"
-        [string]$l10 = "Seconds"
+        [string]$l10 = "Second(s)"
         [string]$l11 = "Logging started."
         [string]$l12 = "To stop, press 0 key,"
         [string]$l13 = "when app window is active."
@@ -65,6 +65,7 @@ $Lang = {
     .$About
 }
 $About = {
+    Clear-Host
     [string]$ver = "1.1.0"
     Write-Host "$l1"
     Write-Host "$l2"
