@@ -2,5 +2,5 @@
 Simple PowerShell script for monitoring RAM usage.
 
 # Requirements:
-OS: Microsoft Windows
-PowerShell: 6.0 (Recommended)
+- OS: Microsoft Windows</br>
+- PowerShell: 6.0 (Recommended)
