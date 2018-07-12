@@ -1,13 +1,14 @@
+ # English
  ### RAM-Logger
  Simple PowerShell script for monitoring RAM usage.
  
  ### Requirements:
- - OS: Microsoft Windows</br>
+ - OS: Microsoft Windows
  - PowerShell: 6.0 (Recommended)
  
  ### Features:
  - Easy to use
- - Light-weight script with ~7KB size and ~35MB RAM usage
+ - Light-weight script with ~8KB size and ~35MB RAM usage
  - RAM usage monitoring with live displaying in console
  - Recording log to *.txt file
  - Monitoring current / minimum / maximum RAM usage (displaying size / percentage)
@@ -15,3 +16,20 @@
  - Log your current PC or any PC in local network
  - Two languages to select (English, Ukrainian)
  
+ # Українська
+ ### RAM-Logger
+ Простий PowerShell скрипт, що дає змогу відстежити використання оперативної пам'яті.
+ 
+ ### Вимоги:
+ - ОС: Microsoft Windows
+ - PowerShell: 6.0 (Рекомендовано)
+ 
+ ### Особливості:
+ - Скрипт легкий у використанні
+ - Скрипт розміріром ~8КБ, який використовує ~35МБ оперативної пам'яті
+ - Моніторинг RAM з миттєвим відображенням в консолі
+ - Запис логу до *.txt файлу
+ - Моніторинг поточного / мінімального / максимального використання RAM (вивід розміру / відсотків)
+ - Можливість вручну виставити інтервал логування (частота логування)
+ - Логування поточного ПК чи будь-якого ПК в локальній мережі
+ - Дві мови для вибору (Англійська, Українська)
