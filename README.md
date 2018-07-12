@@ -12,5 +12,6 @@
  - Recording log to *.txt file
  - Monitoring current / minimum / maximum RAM usage (displaying size / percentage)
  - Ability to manually choose logging interval (logging frequency)
+ - Log your current PC or any PC in local network
  - Two languages to select (English, Ukrainian)
  
