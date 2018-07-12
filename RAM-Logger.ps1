@@ -39,7 +39,7 @@ $Lang = {
         [string]$l25 = "Connecting to computer"
         [string]$l26 = "Could not reach target computer"
         [string]$l27 = "Make sure computer name was entered correctly and WinRM is running / properly configured on target computer."
-        [string]$l28 = "WinRM can be configured using "winrm quickconfig" command"
+        [string]$l28 = "WinRM can be configured using ""winrm quickconfig"" command"
         [string]$l29 = "Monitoring computer"
         [string]$l30 = "Successfully connected to"
         }
@@ -71,7 +71,7 @@ $Lang = {
         [string]$l25 = "Під'єднання до комп'ютера"
         [string]$l26 = "Неможливо з'єднатися з цільовим комп'ютером"
         [string]$l27 = "Переконайтеся, що ім'я комп'ютера введено вірно та WinRM запущено / правильно налаштовано на цільовому комп'ютері."
-        [string]$l28 = "Налаштувати WinRM можна за допомогою команди "winrm quickconfig""
+        [string]$l28 = "Налаштувати WinRM можна за допомогою команди ""winrm quickconfig"""
         [string]$l29 = "Моніторинг комп'ютера"
         [string]$l30 = "Встановлено з'єднання з"
     }
