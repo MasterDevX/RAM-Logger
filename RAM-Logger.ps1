@@ -66,6 +66,7 @@ $Lang = {
         [string]$l24 = "Введіть ім'я комп'ютера в локальній мережі, який буде моніторитися"
         [string]$l25 = "Під'єднання до комп'ютера"
         [string]$l26 = "Неможливо з'єднатися з цілевим комп'ютером"
+        [string]$l27 = "Переконайтеся, що ви вірно ввели ім'я комп'ютера та WinRM запущено / правильно налаштовано на цілевому комп'ютері."
     }
     else{exit}
     .$About
@@ -91,10 +92,15 @@ $Start = {
     $freq = [math]::Round($freq, 0)
     if($freq -lt 1){.$Invvalue}
     $computerlog = Read-Host "$l24"
+    Write-Host "`n"
     Write-Host "$l25 $computerlog ..."
     Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
     if($connectionerror){
         Write-Host "$l26 $computerlog!"
+        Write-Host "`n"
+        Write-Host "$l27"
+        Write-Host "$l28"
+        Write-Host "`n"
         Read-Host "$l23"
         .$Start
     }
