@@ -29,7 +29,7 @@ $Lang = {
         [string]$l15 = "-----END OF LOG-----"
         [string]$l16 = "Log file saved:"
         [string]$l17 = "Start logging"
-        [string]$l18 = "Change logging frequency"
+        [string]$l18 = "Change logging configuration"
         [string]$l19 = "Exit"
         [string]$l20 = "Select next action"
         [string]$l21 = "New logging"
@@ -38,7 +38,11 @@ $Lang = {
         [string]$l24 = "Type in computer name in local network, which will be monitored"
         [string]$l25 = "Connecting to computer"
         [string]$l26 = "Could not reach target computer"
-    }
+        [string]$l27 = "Make sure computer name was entered correctly and WinRM is running / properly configured on target computer."
+        [string]$l28 = "WinRM can be configured using "winrm quickconfig" command"
+        [string]$l29 = "Monitoring computer"
+        [string]$l30 = "Successfully connected to"
+        }
     elseif($lng -eq 2){
         [string]$l1 = "Вітаємо у RAM Logger!"
         [string]$l2 = "Ця програма допоможе"
@@ -57,7 +61,7 @@ $Lang = {
         [string]$l15 = "-----КІНЕЦЬ ЛОГУВАННЯ-----"
         [string]$l16 = "Файл логу збережено:"
         [string]$l17 = "Розпочати логування"
-        [string]$l18 = "Змінити частоту логування"
+        [string]$l18 = "Змінити конфігурацію логування"
         [string]$l19 = "Вийти"
         [string]$l20 = "Виберіть наступну дію"
         [string]$l21 = "Нове логування"
@@ -65,15 +69,18 @@ $Lang = {
         [string]$l23 = "Натисніть Enter для повторного вводу"
         [string]$l24 = "Введіть ім'я комп'ютера в локальній мережі, який буде моніторитися"
         [string]$l25 = "Під'єднання до комп'ютера"
-        [string]$l26 = "Неможливо з'єднатися з цілевим комп'ютером"
-        [string]$l27 = "Переконайтеся, що ви вірно ввели ім'я комп'ютера та WinRM запущено / правильно налаштовано на цілевому комп'ютері."
+        [string]$l26 = "Неможливо з'єднатися з цільовим комп'ютером"
+        [string]$l27 = "Переконайтеся, що ім'я комп'ютера введено вірно та WinRM запущено / правильно налаштовано на цільовому комп'ютері."
+        [string]$l28 = "Налаштувати WinRM можна за допомогою команди "winrm quickconfig""
+        [string]$l29 = "Моніторинг комп'ютера"
+        [string]$l30 = "Встановлено з'єднання з"
     }
     else{exit}
     .$About
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.1.0"
+    [string]$ver = "1.2.0"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -105,7 +112,10 @@ $Start = {
         .$Start
     }
     else{
+        Write-Host "$l30 $computerlog!"
+        Write-Host "`n"
         Write-Host "$l9 $freq $l10"
+        Write-Host "$l29 - $computerlog"
         .$Ask
     }
 }
@@ -118,7 +128,7 @@ $Prelog = {
     $startmsg = "$l14"
     Write-Host "$startmsg"
     $startmsg | Out-File -filepath $logpath -Append String
-    $mainram = Get-Ciminstance Win32_OperatingSystem
+    $mainram = Get-Ciminstance Win32_OperatingSystem -Computer $computerlog
     [decimal]$total = $mainram.TotalVisibleMemorySize/1024/1024
     $xtotal = $total | % {$_.ToString("0.000")}
     [decimal]$minuseds = $total
@@ -128,7 +138,7 @@ $Prelog = {
     .$Startlog
 }
 $Startlog = {
-    $mainram = Get-Ciminstance Win32_OperatingSystem
+    $mainram = Get-Ciminstance Win32_OperatingSystem -Computer $computerlog
     [decimal]$crtuseds = ($mainram.TotalVisibleMemorySize - $mainram.FreePhysicalMemory)/1024/1024
     [int]$crtusedp = $crtuseds*100/$total
     if($crtuseds -lt $minuseds){$minuseds = $crtuseds}
