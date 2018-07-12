@@ -35,6 +35,9 @@ $Lang = {
         [string]$l21 = "New logging"
         [string]$l22 = "You have entered invalid value!"
         [string]$l23 = "Press Enter to try again"
+        [string]$l24 = "Type in computer name in local network, which will be monitored"
+        [string]$l25 = "Connecting to computer"
+        [string]$l26 = "Could not reach target computer"
     }
     elseif($lng -eq 2){
         [string]$l1 = "Вітаємо у RAM Logger!"
@@ -60,6 +63,9 @@ $Lang = {
         [string]$l21 = "Нове логування"
         [string]$l22 = "Ви ввели неприпустиме значення!"
         [string]$l23 = "Натисніть Enter для повторного вводу"
+        [string]$l24 = "Введіть ім'я комп'ютера в локальній мережі, який буде моніторитися"
+        [string]$l25 = "Під'єднання до комп'ютера"
+        [string]$l26 = "Неможливо з'єднатися з цілевим комп'ютером"
     }
     else{exit}
     .$About
@@ -84,6 +90,16 @@ $Start = {
     catch {.$Invvalue}
     $freq = [math]::Round($freq, 0)
     if($freq -lt 1){.$Invvalue}
+    $computerlog = Read-Host "$l24"
+    try {
+        Write-Host "$l25 $computerlog ..."
+        Get-Ciminstance Win32_OperatingSystem -computer $computerlog | Out-Null
+    }
+    catch {
+        Write-Host "$l26 $computerlog!"
+        Read-Host "$l23"
+        .$Start
+    }
     Write-Host "$l9 $freq $l10"
     .$Ask
 }
