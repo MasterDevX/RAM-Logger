@@ -91,17 +91,17 @@ $Start = {
     $freq = [math]::Round($freq, 0)
     if($freq -lt 1){.$Invvalue}
     $computerlog = Read-Host "$l24"
-    try {
-        Write-Host "$l25 $computerlog ..."
-        Get-Ciminstance Win32_OperatingSystem -computer $computerlog | Out-Null
-    }
-    catch {
+    Write-Host "$l25 $computerlog ..."
+    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
+    if($connectionerror){
         Write-Host "$l26 $computerlog!"
         Read-Host "$l23"
         .$Start
     }
+    else{
     Write-Host "$l9 $freq $l10"
     .$Ask
+    }
 }
 $Prelog = {
     Clear-Host
