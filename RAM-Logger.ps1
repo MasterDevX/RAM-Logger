@@ -99,8 +99,8 @@ $Start = {
         .$Start
     }
     else{
-    Write-Host "$l9 $freq $l10"
-    .$Ask
+        Write-Host "$l9 $freq $l10"
+        .$Ask
     }
 }
 $Prelog = {
