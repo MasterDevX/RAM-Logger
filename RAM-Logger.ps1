@@ -173,7 +173,6 @@ $Startremotelog = {
         Read-Host "$l23"
         .$Chooselog
     }
-    Write-Host "`n"
     Write-Host "$l30 $computerlog!"
     Write-Host "`n"
     Write-Host "$l9 $freq $l10"
