@@ -91,7 +91,7 @@ $Lang = {
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.3.0"
+    [string]$ver = "1.3.1"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -161,7 +161,7 @@ $Startremotelog = {
     Write-Host "$l35 $computerlog ..."
     Write-Host "`n"
     $usr = Read-Host "Username"
-    $pwd = Read-Host -as securestring "Password"
+    $pwd = Read-Host -assecurestring "Password"
     $creds = New-Object System.Management.Automation.PSCredential -ArgumentList $usr, $pwd
     $session = New-CimSession -ComputerName $computerlog -Credential $creds
     Write-Host ""`n
