@@ -5,6 +5,7 @@ $Preload = {
     $Host.UI.RawUI.BackgroundColor = 'Black'
     $Host.UI.RawUI.ForegroundColor = 'Blue'
     $logpath = "D:\MemoryUsageLog.txt"
+    $ErrorActionPreference = 'silentlycontinue'
     .$Lang
 }
 $Lang = {
@@ -38,10 +39,15 @@ $Lang = {
         [string]$l24 = "Type in computer name in local network, which will be monitored"
         [string]$l25 = "Connecting to computer"
         [string]$l26 = "Could not reach target computer"
-        [string]$l27 = "Make sure computer name was entered correctly and WinRM is running / properly configured on target computer."
+        [string]$l27 = "Make sure computer name and credentials were entered correctly / WinRM is running and properly configured on target computer."
         [string]$l28 = "WinRM can be configured using ""winrm quickconfig"" command"
         [string]$l29 = "Monitoring computer"
         [string]$l30 = "Successfully connected to"
+        [string]$l31 = "Monitoring current PC"
+        [string]$l32 = "Monitoring remote PC"
+        [string]$l33 = "Make sure WinRM is running and properly configured."
+        [string]$l34 = "For localhost monitoring select ""Monitoring current PC"" in app menu."
+        [string]$l35 = "Creating CIM session for"
         }
     elseif($lng -eq 2){
         [string]$l1 = "Вітаємо у RAM Logger!"
@@ -70,7 +76,7 @@ $Lang = {
         [string]$l24 = "Введіть ім'я комп'ютера в локальній мережі, який буде моніторитися"
         [string]$l25 = "Під'єднання до комп'ютера"
         [string]$l26 = "Неможливо з'єднатися з цільовим комп'ютером"
-        [string]$l27 = "Переконайтеся, що ім'я комп'ютера введено вірно та WinRM запущено / правильно налаштовано на цільовому комп'ютері."
+        [string]$l27 = "Переконайтеся, що ім'я комп'ютера та облікові дані введено вірно / WinRM запущено та правильно налаштовано на цільовому комп'ютері."
         [string]$l28 = "Налаштувати WinRM можна за допомогою команди ""winrm quickconfig"""
         [string]$l29 = "Моніторинг комп'ютера"
         [string]$l30 = "Встановлено з'єднання з"
@@ -80,12 +86,12 @@ $Lang = {
         [string]$l34 = "Для моніторингу localhost виберіть ""Моніторинг поточного ПК"" в меню програми."
         [string]$l35 = "Створення CIM сесії для"
     }
-    else{exit}
+    else{.$Lang}
     .$About
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.2.1"
+    [string]$ver = "1.3.0"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -117,7 +123,7 @@ $Startlocallog = {
     Write-Host "`n"
     $computerlog = "localhost"
     Write-Host "$l25 $computerlog ..."
-    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
+    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror | Out-Null
     if($connectionerror){
         Write-Host "$l26 $computerlog!"
         Write-Host "`n"
@@ -153,9 +159,11 @@ $Startremotelog = {
     }
     Write-Host "`n"
     Write-Host "$l35 $computerlog ..."
+    Write-Host "`n"
     $session = New-CimSession -ComputerName $computerlog -Credential $(Get-Credential)
+    Write-Host ""`n
     Write-Host "$l25 $computerlog ..."
-    try{Get-CimInstance win32_operatingsystem -CimSession $session -erroraction silentlycontinue | Out-Null}
+    try{Get-CimInstance win32_operatingsystem -CimSession $session | Out-Null}
     catch{
         Write-Host "$l26 $computerlog!"
         Write-Host "`n"
