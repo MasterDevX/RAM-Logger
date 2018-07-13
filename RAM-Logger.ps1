@@ -66,7 +66,7 @@ $Lang = {
         [string]$l20 = "Виберіть наступну дію"
         [string]$l21 = "Нове логування"
         [string]$l22 = "Ви ввели неприпустиме значення!"
-        [string]$l23 = "Натисніть Enter для повторного вводу"
+        [string]$l23 = "Натисніть Enter, щоб спробувати знову"
         [string]$l24 = "Введіть ім'я комп'ютера в локальній мережі, який буде моніторитися (натисніть Enter для localhost)"
         [string]$l25 = "Під'єднання до комп'ютера"
         [string]$l26 = "Неможливо з'єднатися з цільовим комп'ютером"
@@ -74,13 +74,16 @@ $Lang = {
         [string]$l28 = "Налаштувати WinRM можна за допомогою команди ""winrm quickconfig"""
         [string]$l29 = "Моніторинг комп'ютера"
         [string]$l30 = "Встановлено з'єднання з"
+        [string]$l31 = "Моніторинг поточного ПК"
+        [string]$l32 = "Моніторинг віддаленого ПК"
+        [string]$l33 = "Переконайтеся, що WinRM запущено та правильно налаштовано."
     }
     else{exit}
     .$About
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.2.0"
+    [string]$ver = "1.2.1"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -90,7 +93,46 @@ $About = {
     Write-Host "$l6 MasterDevX"
     Write-Host "`n"
     Read-Host "$l7"
-    .$Start
+    .$Chooselog
+}
+$Chooselog = {
+    Clear-Host
+    Write-Host "1 - $l31"
+    Write-Host "2 - $l32"
+    Write-Host "3 - $l19"
+    [string]$Action = Read-Host "$l20"
+    if($Action -eq 1){.$Startlocallog}
+    elseIf($Action -eq 2){.$Startremotelog}
+    elseIf($Action -eq 3){exit}
+    else{.$Chooselog}
+}
+$Startlocallog = {
+    Clear-Host
+    try {[decimal]$freq = Read-Host "$l8"}
+    catch {.$Invvalue}
+    $freq = [math]::Round($freq, 0)
+    if($freq -lt 1){.$Invvalue}
+    Write-Host "`n"
+    $computerlog = "localhost"
+    Write-Host "$l25 $computerlog ..."
+    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
+    if($connectionerror){
+        Write-Host "$l26 $computerlog!"
+        Write-Host "`n"
+        Write-Host "$l33"
+        Write-Host "$l28"
+        Write-Host "`n"
+        Read-Host "$l23"
+        .$Startlocallog
+    }
+    else{
+        $session = New-CimSession -ComputerName $computerlog
+        Write-Host "$l30 $computerlog!"
+        Write-Host "`n"
+        Write-Host "$l9 $freq $l10"
+        Write-Host "$l29 - $computerlog"
+        .$Ask
+    }
 }
 $Start = {
     Clear-Host
@@ -103,7 +145,7 @@ $Start = {
     if(($computerlog -eq "") -or ($computerlog -eq " ")){$computerlog = "localhost"}
     Write-Host "`n"
     Write-Host "$l25 $computerlog ..."
-    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
+    Get-Ciminstance Win32_OperatingSystem -Computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
     if($connectionerror){
         Write-Host "$l26 $computerlog!"
         Write-Host "`n"
@@ -130,7 +172,7 @@ $Prelog = {
     $startmsg = "$l14"
     Write-Host "$startmsg"
     $startmsg | Out-File -filepath $logpath -Append String
-    $mainram = Get-Ciminstance Win32_OperatingSystem -Computer $computerlog
+    $mainram = Get-CimInstance win32_operatingsystem -CimSession $session
     [decimal]$total = $mainram.TotalVisibleMemorySize/1024/1024
     $xtotal = $total | % {$_.ToString("0.000")}
     [decimal]$minuseds = $total
@@ -140,7 +182,7 @@ $Prelog = {
     .$Startlog
 }
 $Startlog = {
-    $mainram = Get-Ciminstance Win32_OperatingSystem -Computer $computerlog
+    $mainram = Get-CimInstance win32_operatingsystem -CimSession $session
     [decimal]$crtuseds = ($mainram.TotalVisibleMemorySize - $mainram.FreePhysicalMemory)/1024/1024
     [int]$crtusedp = $crtuseds*100/$total
     if($crtuseds -lt $minuseds){$minuseds = $crtuseds}
@@ -154,7 +196,7 @@ $Startlog = {
     $xminusedp = $minusedp | % {$_.ToString("000")}
     $xmaxuseds = $maxuseds | % {$_.ToString("0.000")}
     $xmaxusedp = $maxusedp | % {$_.ToString("000")}
-    $log = "[$timestamp] Current: $xcrtuseds Gb / $xtotal Gb ($xcrtusedp%) | Min: $xminuseds Gb ($xminusedp%) | Max: $xmaxuseds Gb ($xmaxusedp%)"
+    $log = "[$timestamp | $computerlog] Current: $xcrtuseds Gb / $xtotal Gb ($xcrtusedp%) | Min: $xminuseds Gb ($xminusedp%) | Max: $xmaxuseds Gb ($xmaxusedp%)"
     Write-Host "$log"
     $log | Out-File -filepath $logpath -Append String
     $timeloop = $freq
@@ -186,7 +228,7 @@ $Ask = {
     Write-Host "3 - $l19"
     [string]$Action = Read-Host "$l20"
     if($Action -eq 1){.$Prelog}
-    elseIf($Action -eq 2){.$Start}
+    elseIf($Action -eq 2){.$Chooselog}
     elseIf($Action -eq 3){exit}
     else{exit}
 }
@@ -202,6 +244,6 @@ $Askadv = {
 $Invvalue = {
     Write-Host "$l22"
     Read-Host "$l23"
-    .$Start
+    .$Chooselog
 }
 &$Preload
