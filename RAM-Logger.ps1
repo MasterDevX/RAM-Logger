@@ -35,7 +35,7 @@ $Lang = {
         [string]$l21 = "New logging"
         [string]$l22 = "You have entered invalid value!"
         [string]$l23 = "Press Enter to try again"
-        [string]$l24 = "Type in computer name in local network, which will be monitored (press Enter for localhost)"
+        [string]$l24 = "Type in computer name in local network, which will be monitored"
         [string]$l25 = "Connecting to computer"
         [string]$l26 = "Could not reach target computer"
         [string]$l27 = "Make sure computer name was entered correctly and WinRM is running / properly configured on target computer."
@@ -67,7 +67,7 @@ $Lang = {
         [string]$l21 = "Нове логування"
         [string]$l22 = "Ви ввели неприпустиме значення!"
         [string]$l23 = "Натисніть Enter, щоб спробувати знову"
-        [string]$l24 = "Введіть ім'я комп'ютера в локальній мережі, який буде моніторитися (натисніть Enter для localhost)"
+        [string]$l24 = "Введіть ім'я комп'ютера в локальній мережі, який буде моніторитися"
         [string]$l25 = "Під'єднання до комп'ютера"
         [string]$l26 = "Неможливо з'єднатися з цільовим комп'ютером"
         [string]$l27 = "Переконайтеся, що ім'я комп'ютера введено вірно та WinRM запущено / правильно налаштовано на цільовому комп'ютері."
@@ -77,6 +77,7 @@ $Lang = {
         [string]$l31 = "Моніторинг поточного ПК"
         [string]$l32 = "Моніторинг віддаленого ПК"
         [string]$l33 = "Переконайтеся, що WinRM запущено та правильно налаштовано."
+        [string]$l34 = "Для моніторингу localhost виберіть ""Моніторинг поточного ПК"" в меню програми."
     }
     else{exit}
     .$About
@@ -132,6 +133,32 @@ $Startlocallog = {
         Write-Host "$l9 $freq $l10"
         Write-Host "$l29 - $computerlog"
         .$Ask
+    }
+}
+$Startremotelog = {
+    Clear-Host
+    try {[decimal]$freq = Read-Host "$l8"}
+    catch {.$Invvalue}
+    $freq = [math]::Round($freq, 0)
+    if($freq -lt 1){.$Invvalue}
+    $computerlog = Read-Host "$l24"
+    $computerlog = $computerlog -replace '\s\s',''
+    if(($computerlog -eq "") -or ($computerlog -eq " ")){$computerlog = "localhost"}
+    if($computerlog -eq "localhost"){
+        Write-Host "`n"
+        Write-Host "$l34"
+        Read-Host "$l23"
+        .$Chooselog
+    }
+    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
+    if($connectionerror){
+        Write-Host "$l26 $computerlog!"
+        Write-Host "`n"
+        Write-Host "$l27"
+        Write-Host "$l28"
+        Write-Host "`n"
+        Read-Host "$l23"
+        .$Chooselog
     }
 }
 $Start = {
