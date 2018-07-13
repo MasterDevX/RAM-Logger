@@ -155,8 +155,8 @@ $Startremotelog = {
     Write-Host "$l35 $computerlog ..."
     $session = New-CimSession -ComputerName $computerlog -Credential $(Get-Credential)
     Write-Host "$l25 $computerlog ..."
-    Get-CimInstance win32_operatingsystem -CimSession $session -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
-    if($connectionerror){
+    try{Get-CimInstance win32_operatingsystem -CimSession $session -erroraction silentlycontinue | Out-Null}
+    catch{
         Write-Host "$l26 $computerlog!"
         Write-Host "`n"
         Write-Host "$l27"
@@ -165,14 +165,12 @@ $Startremotelog = {
         Read-Host "$l23"
         .$Chooselog
     }
-    else{
-        Write-Host "`n"
-        Write-Host "$l30 $computerlog!"
-        Write-Host "`n"
-        Write-Host "$l9 $freq $l10"
-        Write-Host "$l29 - $computerlog"
-        .$Ask
-    }
+    Write-Host "`n"
+    Write-Host "$l30 $computerlog!"
+    Write-Host "`n"
+    Write-Host "$l9 $freq $l10"
+     Write-Host "$l29 - $computerlog"
+    .$Ask
 }
 $Prelog = {
     Clear-Host
