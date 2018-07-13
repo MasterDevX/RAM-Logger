@@ -78,6 +78,7 @@ $Lang = {
         [string]$l32 = "Моніторинг віддаленого ПК"
         [string]$l33 = "Переконайтеся, що WinRM запущено та правильно налаштовано."
         [string]$l34 = "Для моніторингу localhost виберіть ""Моніторинг поточного ПК"" в меню програми."
+        [string]$l35 = "Створення CIM сесії для"
     }
     else{exit}
     .$About
@@ -150,7 +151,11 @@ $Startremotelog = {
         Read-Host "$l23"
         .$Chooselog
     }
-    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
+    Write-Host "`n"
+    Write-Host "$l35 $computerlog ..."
+    $session = New-CimSession -ComputerName $computerlog -Credential $(Get-Credential)
+    Write-Host "$l25 $computerlog ..."
+    Get-CimInstance win32_operatingsystem -CimSession $session -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
     if($connectionerror){
         Write-Host "$l26 $computerlog!"
         Write-Host "`n"
@@ -160,29 +165,8 @@ $Startremotelog = {
         Read-Host "$l23"
         .$Chooselog
     }
-}
-$Start = {
-    Clear-Host
-    try {[decimal]$freq = Read-Host "$l8"}
-    catch {.$Invvalue}
-    $freq = [math]::Round($freq, 0)
-    if($freq -lt 1){.$Invvalue}
-    $computerlog = Read-Host "$l24"
-    $computerlog = $computerlog -replace '\s\s',''
-    if(($computerlog -eq "") -or ($computerlog -eq " ")){$computerlog = "localhost"}
-    Write-Host "`n"
-    Write-Host "$l25 $computerlog ..."
-    Get-Ciminstance Win32_OperatingSystem -Computer $computerlog -errorvariable connectionerror -erroraction silentlycontinue | Out-Null
-    if($connectionerror){
-        Write-Host "$l26 $computerlog!"
-        Write-Host "`n"
-        Write-Host "$l27"
-        Write-Host "$l28"
-        Write-Host "`n"
-        Read-Host "$l23"
-        .$Start
-    }
     else{
+        Write-Host "`n"
         Write-Host "$l30 $computerlog!"
         Write-Host "`n"
         Write-Host "$l9 $freq $l10"
