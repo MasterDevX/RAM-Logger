@@ -5,10 +5,11 @@
  ### Requirements:
  - OS: Microsoft Windows
  - PowerShell: 6.0 (Recommended)
+ - Login / Password of administrator account
  
  ### Features:
  - Easy to use
- - Light-weight script with ~8KB size and ~35MB RAM usage
+ - Light-weight script with ~10KB size and ~35MB RAM usage
  - RAM usage monitoring with live displaying in console
  - Recording log to *.txt file
  - Monitoring current / minimum / maximum RAM usage (displaying size / percentage)
@@ -23,10 +24,11 @@
  ### Вимоги:
  - ОС: Microsoft Windows
  - PowerShell: 6.0 (Рекомендовано)
+ - Логін / Пароль від облікового запису адміністратора
  
  ### Особливості:
  - Скрипт легкий у використанні
- - Скрипт розміріром ~8КБ, який використовує ~35МБ оперативної пам'яті
+ - Скрипт розміріром ~10КБ, який використовує ~35МБ оперативної пам'яті
  - Моніторинг RAM з миттєвим відображенням в консолі
  - Запис логу до *.txt файлу
  - Моніторинг поточного / мінімального / максимального використання RAM (вивід розміру / відсотків)
