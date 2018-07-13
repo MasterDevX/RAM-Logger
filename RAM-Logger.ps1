@@ -160,7 +160,10 @@ $Startremotelog = {
     Write-Host "`n"
     Write-Host "$l35 $computerlog ..."
     Write-Host "`n"
-    $session = New-CimSession -ComputerName $computerlog -Credential $(Get-Credential)
+    $usr = Read-Host "Username"
+    $pwd = Read-Host -as securestring "Password"
+    $creds = New-Object System.Management.Automation.PSCredential -ArgumentList $usr, $pwd
+    $session = New-CimSession -ComputerName $computerlog -Credential $creds
     Write-Host ""`n
     Write-Host "$l25 $computerlog ..."
     try{Get-CimInstance win32_operatingsystem -CimSession $session | Out-Null}
