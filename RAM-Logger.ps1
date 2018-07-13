@@ -48,6 +48,7 @@ $Lang = {
         [string]$l33 = "Make sure WinRM is running and properly configured."
         [string]$l34 = "For localhost monitoring select ""Monitoring current PC"" in app menu."
         [string]$l35 = "Creating CIM session for"
+        [string]$l36 = "Enable saving log to file? (1 - Yes | 0 -No)"
         }
     elseif($lng -eq 2){
         [string]$l1 = "Вітаємо у RAM Logger!"
@@ -92,7 +93,7 @@ $Lang = {
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.3.1"
+    [string]$ver = "1.4.0"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -121,7 +122,7 @@ $Startlocallog = {
     catch {.$Invvalue}
     $freq = [math]::Round($freq, 0)
     if($freq -lt 1){.$Invvalue}
-    $tofile = Read-Host "$l35"
+    $tofile = Read-Host "$l36"
     if(($tofile -ne 1) -and ($tofile -ne 0)){.$Invvalue}
     Write-Host "`n"
     $computerlog = "localhost"
@@ -151,6 +152,8 @@ $Startremotelog = {
     catch {.$Invvalue}
     $freq = [math]::Round($freq, 0)
     if($freq -lt 1){.$Invvalue}
+    $tofile = Read-Host "$l36"
+    if(($tofile -ne 1) -and ($tofile -ne 0)){.$Invvalue}
     $computerlog = Read-Host "$l24"
     $computerlog = $computerlog -replace '\s\s',''
     if(($computerlog -eq "") -or ($computerlog -eq " ")){$computerlog = "localhost"}
@@ -247,8 +250,10 @@ $Stoplog = {
     if($tofile -eq 1){
         $lbreak | Out-File -filepath $logpath -Append String
     }
-    Write-Host "`n"
-    Write-Host "$l16 $logpath"
+    if($tofile -eq 1){
+        Write-Host "`n"
+        Write-Host "$l16 $logpath"
+    }
     .$Askadv
 }
 $Ask = {
