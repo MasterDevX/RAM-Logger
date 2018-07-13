@@ -85,6 +85,7 @@ $Lang = {
         [string]$l33 = "Переконайтеся, що WinRM запущено та правильно налаштовано."
         [string]$l34 = "Для моніторингу localhost виберіть ""Моніторинг поточного ПК"" в меню програми."
         [string]$l35 = "Створення CIM сесії для"
+        [string]$l36 = "Увімкнути запис логу до файлу? (1 - Так | 0 - Ні)"
     }
     else{.$Lang}
     .$About
@@ -120,6 +121,8 @@ $Startlocallog = {
     catch {.$Invvalue}
     $freq = [math]::Round($freq, 0)
     if($freq -lt 1){.$Invvalue}
+    $tofile = Read-Host "$l35"
+    if(($tofile -ne 1) -and ($tofile -ne 0)){.$Invvalue}
     Write-Host "`n"
     $computerlog = "localhost"
     Write-Host "$l25 $computerlog ..."
@@ -190,7 +193,9 @@ $Prelog = {
     Write-Host "`n"
     $startmsg = "$l14"
     Write-Host "$startmsg"
-    $startmsg | Out-File -filepath $logpath -Append String
+    if($tofile -eq 1){
+        $startmsg | Out-File -filepath $logpath -Append String
+    }
     $mainram = Get-CimInstance win32_operatingsystem -CimSession $session
     [decimal]$total = $mainram.TotalVisibleMemorySize/1024/1024
     $xtotal = $total | % {$_.ToString("0.000")}
@@ -217,7 +222,9 @@ $Startlog = {
     $xmaxusedp = $maxusedp | % {$_.ToString("000")}
     $log = "[$timestamp | $computerlog] Current: $xcrtuseds Gb / $xtotal Gb ($xcrtusedp%) | Min: $xminuseds Gb ($xminusedp%) | Max: $xmaxuseds Gb ($xmaxusedp%)"
     Write-Host "$log"
-    $log | Out-File -filepath $logpath -Append String
+    if($tofile -eq 1){
+        $log | Out-File -filepath $logpath -Append String
+    }
     $timeloop = $freq
     .$Loopmain    
 }
@@ -233,9 +240,13 @@ $Loopmain = {
 $Stoplog = {
     $stopmsg = "$l15"
     Write-Host "$stopmsg"
-    $stopmsg | Out-File -filepath $logpath -Append String
+    if($tofile -eq 1){
+        $stopmsg | Out-File -filepath $logpath -Append String
+    }
     $lbreak = "`n"
-    $lbreak | Out-File -filepath $logpath -Append String
+    if($tofile -eq 1){
+        $lbreak | Out-File -filepath $logpath -Append String
+    }
     Write-Host "`n"
     Write-Host "$l16 $logpath"
     .$Askadv
