@@ -264,7 +264,7 @@ $Askadv = {
     Write-Host "1 - $l21"
     Write-Host "2 - $l19"
     [string]$Action = Read-Host "$l20"
-    if($Action -eq 1){.$Start}
+    if($Action -eq 1){.$Chooselog}
     elseIf($Action -eq 2){exit}
     else{exit}
 }
