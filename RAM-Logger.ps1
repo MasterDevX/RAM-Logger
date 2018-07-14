@@ -9,6 +9,7 @@ $Preload = {
     .$Lang
 }
 $Lang = {
+    Clear-Host
     Write-Host "1 - English"
     Write-Host "2 - Українська"
     [string]$lng = Read-Host "Select language / Виберіть мову"
@@ -97,7 +98,7 @@ $Lang = {
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.4.1"
+    [string]$ver = "1.4.2"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -285,6 +286,7 @@ $Askadv = {
     else{exit}
 }
 $Invvalue = {
+    Write-Host "`n"
     Write-Host "$l22"
     Read-Host "$l23"
     .$Chooselog
