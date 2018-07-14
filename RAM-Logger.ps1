@@ -49,6 +49,8 @@ $Lang = {
         [string]$l34 = "For localhost monitoring select ""Monitoring current PC"" in app menu."
         [string]$l35 = "Creating CIM session for"
         [string]$l36 = "Enable saving log to file? (1 - Yes | 0 -No)"
+        [string]$l37 = "Saving log to file enabled"
+        [string]$l38 = "Saving log to file disabled"
         }
     elseif($lng -eq 2){
         [string]$l1 = "Вітаємо у RAM Logger!"
@@ -87,6 +89,8 @@ $Lang = {
         [string]$l34 = "Для моніторингу localhost виберіть ""Моніторинг поточного ПК"" в меню програми."
         [string]$l35 = "Створення CIM сесії для"
         [string]$l36 = "Увімкнути запис логу до файлу? (1 - Так | 0 - Ні)"
+        [string]$l37 = "Запис логу до файлу увімкнено"
+        [string]$l38 = "Запис логу до файлу вимкнено"
     }
     else{.$Lang}
     .$About
@@ -135,13 +139,15 @@ $Startlocallog = {
         Write-Host "$l28"
         Write-Host "`n"
         Read-Host "$l23"
-        .$Startlocallog
+        .$Chooselog
     }
     else{
         $session = New-CimSession -ComputerName $computerlog
         Write-Host "$l30 $computerlog!"
         Write-Host "`n"
         Write-Host "$l9 $freq $l10"
+        if($tofile -eq 1){Write-Host "$l37"}
+        else{Write-Host "$l38"}
         Write-Host "$l29 - $computerlog"
         .$Ask
     }
@@ -185,7 +191,9 @@ $Startremotelog = {
     Write-Host "$l30 $computerlog!"
     Write-Host "`n"
     Write-Host "$l9 $freq $l10"
-     Write-Host "$l29 - $computerlog"
+    if($tofile -eq 1){Write-Host "$l37"}
+    else{Write-Host "$l38"}
+    Write-Host "$l29 - $computerlog"
     .$Ask
 }
 $Prelog = {
