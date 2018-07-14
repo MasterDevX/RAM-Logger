@@ -22,7 +22,7 @@ $Lang = {
         [string]$l7 = "Press Enter to begin"
         [string]$l8 = "Type in logging frequency in seconds"
         [string]$l9 = "Logging frequency was set to"
-        [string]$l10 = "Second(s)"
+        [string]$l10 = "second(s)"
         [string]$l11 = "Logging started."
         [string]$l12 = "To stop, press 0 key,"
         [string]$l13 = "when app window is active."
@@ -60,7 +60,7 @@ $Lang = {
         [string]$l7 = "Натисніть Enter, щоб розпочати"
         [string]$l8 = "Введіть частоту логування в секундах"
         [string]$l9 = "Встановлено частоту логування"
-        [string]$l10 = "Секунд(и)"
+        [string]$l10 = "cекунд(и)"
         [string]$l11 = "Логування розпочато."
         [string]$l12 = "Щоб зупинити, натисніть клавішу 0,"
         [string]$l13 = "коли вікно програми активне."
@@ -93,7 +93,7 @@ $Lang = {
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.4.0"
+    [string]$ver = "1.4.1"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -170,7 +170,7 @@ $Startremotelog = {
     $pwd = Read-Host -assecurestring "Password"
     $creds = New-Object System.Management.Automation.PSCredential -ArgumentList $usr, $pwd
     $session = New-CimSession -ComputerName $computerlog -Credential $creds
-    Write-Host ""`n
+    Write-Host "`n"
     Write-Host "$l25 $computerlog ..."
     try{Get-CimInstance win32_operatingsystem -CimSession $session | Out-Null}
     catch{
