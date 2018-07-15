@@ -1,11 +1,11 @@
 $Preload = {
     Clear-Host
     [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
-    $Host.ui.RawUI.WindowTitle = "RAM Logger"
-    $Host.UI.RawUI.BackgroundColor = 'Black'
-    $Host.UI.RawUI.ForegroundColor = 'Blue'
+    $Host.Ui.RawUI.WindowTitle = "RAM Logger"
+    $Host.UI.RawUI.BackgroundColor = "Black"
+    $Host.UI.RawUI.ForegroundColor = "Blue"
     $logpath = "D:\MemoryUsageLog.txt"
-    $ErrorActionPreference = 'silentlycontinue'
+    $ErrorActionPreference = "silentlycontinue"
     .$Lang
 }
 $Lang = {
@@ -42,7 +42,7 @@ $Lang = {
         [string]$l25 = "Connecting to computer"
         [string]$l26 = "Could not reach target computer"
         [string]$l27 = "Make sure computer name and credentials were entered correctly / WinRM is running and properly configured on target computer."
-        [string]$l28 = "WinRM can be configured using ""winrm quickconfig"" command"
+        [string]$l28 = "WinRM can be configured using ""winrm quickconfig"" command."
         [string]$l29 = "Monitoring computer"
         [string]$l30 = "Successfully connected to"
         [string]$l31 = "Monitoring current PC"
@@ -68,8 +68,8 @@ $Lang = {
         [string]$l11 = "Логування розпочато."
         [string]$l12 = "Щоб зупинити, натисніть клавішу 0,"
         [string]$l13 = "коли вікно програми активне."
-        [string]$l14 = "-----ПОЧАТОК ЛОГУВАННЯ-----"
-        [string]$l15 = "-----КІНЕЦЬ ЛОГУВАННЯ-----"
+        [string]$l14 = "-----ПОЧАТОК ЛОГУ-----"
+        [string]$l15 = "-----КІНЕЦЬ ЛОГУ-----"
         [string]$l16 = "Файл логу збережено:"
         [string]$l17 = "Розпочати логування"
         [string]$l18 = "Змінити конфігурацію логування"
@@ -82,7 +82,7 @@ $Lang = {
         [string]$l25 = "Під'єднання до комп'ютера"
         [string]$l26 = "Неможливо з'єднатися з цільовим комп'ютером"
         [string]$l27 = "Переконайтеся, що ім'я комп'ютера та облікові дані введено вірно / WinRM запущено та правильно налаштовано на цільовому комп'ютері."
-        [string]$l28 = "Налаштувати WinRM можна за допомогою команди ""winrm quickconfig"""
+        [string]$l28 = "Налаштувати WinRM можна за допомогою команди ""winrm quickconfig""."
         [string]$l29 = "Моніторинг комп'ютера"
         [string]$l30 = "Встановлено з'єднання з"
         [string]$l31 = "Моніторинг поточного ПК"
@@ -108,9 +108,9 @@ $Lang = {
         [string]$l11 = "Логирование начато."
         [string]$l12 = "Чтобы остановить, нажмите клавишу 0,"
         [string]$l13 = "когда окно программы активное."
-        [string]$l14 = "-----НАЧАЛО ЛОГИРОВАНИЯ-----"
-        [string]$l15 = "-----КОНЕЦ ЛОГИРОВАНИЯ-----"
-        [string]$l16 = "Файл логирования сохранено:"
+        [string]$l14 = "-----НАЧАЛО ЛОГА-----"
+        [string]$l15 = "-----КОНЕЦ ЛОГА-----"
+        [string]$l16 = "Файл лога сохранён:"
         [string]$l17 = "Начать логирование"
         [string]$l18 = "Изменить конфигурацию логирования"
         [string]$l19 = "Выйти"
@@ -122,7 +122,7 @@ $Lang = {
         [string]$l25 = "Подключение к компьютеру"
         [string]$l26 = "Невозможно соединиться с целевым компьютером"
         [string]$l27 = "Убедитесь, что имя компьютера и учетные данные введено верно / WinRM запущен и правильно настроен на целевом компьютере."
-        [string]$l28 = "Настроить WinRM можно с помощью команды ""winrm quickconfig"""
+        [string]$l28 = "Настроить WinRM можно с помощью команды ""winrm quickconfig""."
         [string]$l29 = "Мониторинг компьютера"
         [string]$l30 = "Установлено соединение с"
         [string]$l31 = "Мониторинг текущего ПК"
@@ -131,8 +131,8 @@ $Lang = {
         [string]$l34 = "Для мониторинга localhost выберите ""Мониторинг текущего ПК"" в меню программы."
         [string]$l35 = "Создание CIM сессии для"
         [string]$l36 = "Включить запись лога в файл? (1 - Да | 0 - Нет)"
-        [string]$l37 = "Запись лога в файл включено"
-        [string]$l38 = "Запись лога в файл выключено"
+        [string]$l37 = "Запись лога в файл включена"
+        [string]$l38 = "Запись лога в файл выключена"
     }
     else{.$Lang}
     .$About
@@ -173,7 +173,7 @@ $Startlocallog = {
     Write-Host "`n"
     $computerlog = "localhost"
     Write-Host "$l25 $computerlog ..."
-    Get-Ciminstance Win32_OperatingSystem -computer $computerlog -errorvariable connectionerror | Out-Null
+    Get-Ciminstance Win32_OperatingSystem -Computer $computerlog -Errorvariable connectionerror | Out-Null
     if($connectionerror){
         Write-Host "$l26 $computerlog!"
         Write-Host "`n"
@@ -184,7 +184,7 @@ $Startlocallog = {
         .$Chooselog
     }
     else{
-        $session = New-CimSession -ComputerName $computerlog
+        $session = New-CimSession -Computer $computerlog
         Write-Host "$l30 $computerlog!"
         Write-Host "`n"
         Write-Host "$l9 $freq $l10"
@@ -203,7 +203,7 @@ $Startremotelog = {
     $tofile = Read-Host "$l36"
     if(($tofile -ne 1) -and ($tofile -ne 0)){.$Invvalue}
     $computerlog = Read-Host "$l24"
-    $computerlog = $computerlog -replace '\s\s',''
+    $computerlog = $computerlog -Replace '\s\s',''
     if(($computerlog -eq "") -or ($computerlog -eq " ")){$computerlog = "localhost"}
     if($computerlog -eq "localhost"){
         Write-Host "`n"
@@ -215,9 +215,9 @@ $Startremotelog = {
     Write-Host "$l35 $computerlog ..."
     Write-Host "`n"
     $usr = Read-Host "Username"
-    $pwd = Read-Host -assecurestring "Password"
+    $pwd = Read-Host -AsSecureString "Password"
     $creds = New-Object System.Management.Automation.PSCredential -ArgumentList $usr, $pwd
-    $session = New-CimSession -ComputerName $computerlog -Credential $creds
+    $session = New-CimSession -Computer $computerlog -Credential $creds
     Write-Host "`n"
     Write-Host "$l25 $computerlog ..."
     try{Get-CimInstance win32_operatingsystem -CimSession $session | Out-Null}
@@ -247,7 +247,7 @@ $Prelog = {
     $startmsg = "$l14"
     Write-Host "$startmsg"
     if($tofile -eq 1){
-        $startmsg | Out-File -filepath $logpath -Append String
+        $startmsg | Out-File -Filepath $logpath -Append String
     }
     $mainram = Get-CimInstance win32_operatingsystem -CimSession $session
     [decimal]$total = $mainram.TotalVisibleMemorySize/1024/1024
@@ -266,7 +266,7 @@ $Startlog = {
     if($crtusedp -lt $minusedp){$minusedp = $crtusedp}
     if($crtuseds -gt $maxuseds){$maxuseds = $crtuseds}
     if($crtusedp -gt $maxusedp){$maxusedp = $crtusedp}
-    $timestamp = Get-Date -format "HH:mm:ss"
+    $timestamp = Get-Date -Format "HH:mm:ss"
     $xcrtuseds = $crtuseds | % {$_.ToString("0.000")}
     $xcrtusedp = $crtusedp | % {$_.ToString("000")}
     $xminuseds = $minuseds | % {$_.ToString("0.000")}
@@ -276,7 +276,7 @@ $Startlog = {
     $log = "[$timestamp | $computerlog] Current: $xcrtuseds Gb / $xtotal Gb ($xcrtusedp%) | Min: $xminuseds Gb ($xminusedp%) | Max: $xmaxuseds Gb ($xmaxusedp%)"
     Write-Host "$log"
     if($tofile -eq 1){
-        $log | Out-File -filepath $logpath -Append String
+        $log | Out-File -Filepath $logpath -Append String
     }
     $timeloop = $freq
     .$Loopmain    
@@ -294,11 +294,11 @@ $Stoplog = {
     $stopmsg = "$l15"
     Write-Host "$stopmsg"
     if($tofile -eq 1){
-        $stopmsg | Out-File -filepath $logpath -Append String
+        $stopmsg | Out-File -Filepath $logpath -Append String
     }
     $lbreak = "`n"
     if($tofile -eq 1){
-        $lbreak | Out-File -filepath $logpath -Append String
+        $lbreak | Out-File -Filepath $logpath -Append String
     }
     if($tofile -eq 1){
         Write-Host "`n"
