@@ -53,6 +53,7 @@ $Lang = {
         [string]$l36 = "Enable saving log to file? (1 - Yes | 0 -No)"
         [string]$l37 = "Saving log to file enabled"
         [string]$l38 = "Saving log to file disabled"
+        [string]$l39 = "Type in remote PC administrator account credentials."
         }
     elseif($lng -eq 2){
         [string]$l1 = "Вітаємо у RAM Logger!"
@@ -93,6 +94,7 @@ $Lang = {
         [string]$l36 = "Увімкнути запис логу до файлу? (1 - Так | 0 - Ні)"
         [string]$l37 = "Запис логу до файлу увімкнено"
         [string]$l38 = "Запис логу до файлу вимкнено"
+        [string]$l39 = "Введіть облікові дані від облікового запису адміністратора віддаленого ПК."
     }
     elseif($lng -eq 3){
         [string]$l1 = "Добро пожаловать в RAM Logger!"
@@ -133,6 +135,7 @@ $Lang = {
         [string]$l36 = "Включить запись лога в файл? (1 - Да | 0 - Нет)"
         [string]$l37 = "Запись лога в файл включена"
         [string]$l38 = "Запись лога в файл выключена"
+        [string]$l39 = "Введите учетные данные от учетной записи администратора удаленного ПК."
     }
     else{.$Lang}
     .$About
@@ -214,6 +217,7 @@ $Startremotelog = {
     Write-Host "`n"
     Write-Host "$l35 $computerlog ..."
     Write-Host "`n"
+    Write-Host "$l39"
     $usr = Read-Host "Username"
     $pwd = Read-Host -AsSecureString "Password"
     $creds = New-Object System.Management.Automation.PSCredential -ArgumentList $usr, $pwd
