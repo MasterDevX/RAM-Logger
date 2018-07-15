@@ -17,6 +17,30 @@
  - Log your current PC or any PC in local network
  - Two languages to select (English, Ukrainian)
  
+ ### Things to do before execution:
+ 1. Make sure PowerShell 6.0 or newer version is installed on your PC. </br>
+    If version does'nt meet requirements, you can download newer version from official repo: </br>
+    https://github.com/PowerShell/PowerShell/releases
+    
+ 2. Make sure you have access to administrator's account. </br>
+    If you're about to monitor remote PC, you need to have login and password from administrator's account on remote PC. </br>
+    If remote PC account doesn't have password, you'll be unable to use remote monitoring function, until you set password.
+    
+ 3. Configure trusted hosts settings. </br>
+    Run PowerShell as administrator, type in following command and hit Enter: </br>
+    ```Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*" -Force```
+    
+ 4. Set up WinRM. </br>
+    In PowerShell command promp run this command with administrator rights: </br>
+    ```WinRM quickconfig``` </br>
+    Answer "Yes" to all next questions.
+    
+ 5. Give permissions for script execution. </br>
+    Open PowerShell once again under administrator rights and execute following command: </br>
+    ```Set-ExecutionPolicy Unrestricted -Force```
+ 
+ 6. To avoid problems while using app, it is recommended to disable firewall or any other program, which can block internet-connections.
+ 
  # Українська
  ### RAM-Logger
  Простий PowerShell скрипт, що дає змогу відстежити використання оперативної пам'яті.
