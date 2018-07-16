@@ -5,7 +5,7 @@
  ### Requirements:
  - OS: Microsoft Windows
  - PowerShell: 6.0 (Recommended)
- - Login / Password of administrator accountl
+ - Login / Password of administrator account
  
  ### Features:
  - Easy to use
