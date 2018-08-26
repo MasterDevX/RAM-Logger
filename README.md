@@ -19,7 +19,7 @@
  
  ### Things to do before execution:
  1. Make sure PowerShell 6.0 or newer version is installed on your PC. </br>
-    If version does'nt meet requirements, you can download newer version from official repo: </br>
+    If version doesn't meet requirements, you can download newer version from official repo: </br>
     https://github.com/PowerShell/PowerShell/releases
     
  2. Make sure you have access to administrator's account. </br>
@@ -31,7 +31,7 @@
     ```Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*" -Force```
     
  4. Set up WinRM. </br>
-    In PowerShell command promp run this command with administrator rights: </br>
+    In PowerShell command promt run this command with administrator rights: </br>
     ```WinRM quickconfig``` </br>
     Answer "Yes" to all next questions.
     
