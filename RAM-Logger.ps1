@@ -1,7 +1,7 @@
 $Preload = {
     Clear-Host
-    [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("utf-8")
-    $Host.Ui.RawUI.WindowTitle = "RAM Logger"
+    [Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("UTF-8")
+    $Host.UI.RawUI.WindowTitle = "RAM Logger"
     $Host.UI.RawUI.BackgroundColor = "Black"
     $Host.UI.RawUI.ForegroundColor = "Blue"
     $logpath = "D:\MemoryUsageLog.txt"
@@ -142,7 +142,7 @@ $Lang = {
 }
 $About = {
     Clear-Host
-    [string]$ver = "1.5.0"
+    [string]$ver = "1.5.1"
     Write-Host "$l1"
     Write-Host "$l2"
     Write-Host "$l3"
@@ -336,4 +336,4 @@ $Invvalue = {
     Read-Host "$l23"
     .$Chooselog
 }
-&$Preload
+.$Preload
