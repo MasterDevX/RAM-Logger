@@ -4,7 +4,7 @@
  
  ### Requirements:
  - OS: Microsoft Windows
- - PowerShell: 6.0 (Recommended)
+ - PowerShell: 6.0+ (Recommended)
  - Login / Password of administrator account
  
  ### Features:
@@ -47,7 +47,7 @@
  
  ### Вимоги:
  - ОС: Microsoft Windows
- - PowerShell: 6.0 (Рекомендовано)
+ - PowerShell: 6.0+ (Рекомендовано)
  - Логін / Пароль від облікового запису адміністратора
  
  ### Особливості:
@@ -90,7 +90,7 @@
  
  ### Требования:
  - ОС: Microsoft Windows
- - PowerShell: 6.0 (Рекомендуется)
+ - PowerShell: 6.0+ (Рекомендуется)
  - Логин / Пароль от учетной записи администратора
  
  ### Особенности:
