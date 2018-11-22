@@ -250,9 +250,7 @@ $Prelog = {
     Write-Host "`n"
     $startmsg = "$l14"
     Write-Host "$startmsg"
-    if($tofile -eq 1){
-        $startmsg | Out-File -Filepath $logpath -Append String
-    }
+    if($tofile -eq 1){$startmsg | Out-File -Filepath $logpath -Append String}
     $mainram = Get-CimInstance win32_operatingsystem -CimSession $session
     [decimal]$total = $mainram.TotalVisibleMemorySize/1024/1024
     $xtotal = $total | % {$_.ToString("0.000")}
@@ -279,9 +277,7 @@ $Startlog = {
     $xmaxusedp = $maxusedp | % {$_.ToString("000")}
     $log = "[$timestamp | $computerlog] Current: $xcrtuseds Gb / $xtotal Gb ($xcrtusedp%) | Min: $xminuseds Gb ($xminusedp%) | Max: $xmaxuseds Gb ($xmaxusedp%)"
     Write-Host "$log"
-    if($tofile -eq 1){
-        $log | Out-File -Filepath $logpath -Append String
-    }
+    if($tofile -eq 1){$log | Out-File -Filepath $logpath -Append String}
     $timeloop = $freq
     .$Loopmain    
 }
@@ -297,14 +293,10 @@ $Loopmain = {
 $Stoplog = {
     $stopmsg = "$l15"
     Write-Host "$stopmsg"
-    if($tofile -eq 1){
-        $stopmsg | Out-File -Filepath $logpath -Append String
-    }
     $lbreak = "`n"
     if($tofile -eq 1){
+        $stopmsg | Out-File -Filepath $logpath -Append String
         $lbreak | Out-File -Filepath $logpath -Append String
-    }
-    if($tofile -eq 1){
         Write-Host "`n"
         Write-Host "$l16 $logpath"
     }
